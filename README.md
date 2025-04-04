@@ -11,7 +11,7 @@ This is a simple Sudoku game built using Python and PyQt5. The application allow
 
 ## Features
 
-- **Sudoku Solver**: Automatically solves the Sudoku puzzle using backtracking.
+- **Sudoku Solver**: Automatically solves the Sudoku puzzle using Optimazed Backtracking with Lookahead.
 - **User Interface**: A graphical user interface (GUI) built with PyQt5 that mimics a traditional Sudoku board.
 - **Input Validation**: Ensures that the user inputs valid numbers in the Sudoku grid.
 - **Game Over & Win Notifications**: Provides feedback when the player wins or loses.
