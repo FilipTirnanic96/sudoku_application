@@ -13,9 +13,7 @@ This is a simple Sudoku game built using Python and PyQt5. The application allow
 
 - **Sudoku Solver**: Automatically solves the Sudoku puzzle using Optimazed Backtracking with Lookahead.
 - **User Interface**: A graphical user interface (GUI) built with PyQt5 that mimics a traditional Sudoku board.
-- **Input Validation**: Ensures that the user inputs valid numbers in the Sudoku grid.
 - **Game Over & Win Notifications**: Provides feedback when the player wins or loses.
-- **Undo/Redo Actions**: (Optional) Can be implemented for a better user experience.
 
 ## Requirements
 
@@ -49,23 +47,25 @@ This is a simple Sudoku game built using Python and PyQt5. The application allow
    ```bash
    python main.py
    ```
-
-2. The Sudoku grid will be displayed with pre-filled numbers and empty cells.
-3. Click on the empty cells to input numbers (1-9).
-4. Once the puzzle is solved, the timer will stop, and a congratulatory message will appear.
-
-### Game Over:
-- If the player makes three incorrect moves, a "Game Over" message will be shown.
-
-### Sudoku Solver:
-- The application can automatically solve a Sudoku puzzle using a backtracking algorithm.
+2. Select new game with specified difficulty.
+3. The Sudoku grid will be displayed with pre-filled numbers and empty cells.
+4. Click on the empty cells to input numbers (1-9).
+5. Once the puzzle is solved, the timer will stop, and a congratulatory message will appear.
+6. If the player makes three incorrect moves, a "Game Over" message will be shown.
 
 ## Application Flow
 
-1. **Start a New Game**: A new randomized Sudoku puzzle is generated each time the application is run.
-2. **Solve Puzzle**: The user can either solve the puzzle manually or use the solver feature.
-3. **Game Over**: After three mistakes, the user loses and a message is shown.
-4. **Puzzle Solved**: When the puzzle is completed correctly, a congratulatory message will appear with the time taken.
+1. **Start a New Game with selected difficulty**: A new randomized Sudoku puzzle is generated each time the new game is selected. <br/> <br/>
+   <img src="https://github.com/user-attachments/assets/7c07d3b7-92c7-4627-96b6-360bfe161a6e" alt="Description" width="350" height="360">
+
+2. **Solve Puzzle**: The user solves the puzzle manually. <br/>  <br/>
+   <img src="https://github.com/user-attachments/assets/7fd6b125-4e44-483f-ad06-f35484e9c5bf" alt="Description" width="350" height="360">
+
+3. **Game Over**: After three mistakes, the user loses and a message is shown. <br/>  <br/>
+   <img src="https://github.com/user-attachments/assets/4d5924f3-abb6-436f-aed6-d25d58beb17a" alt="Description" width="350" height="360">
+
+4. **Puzzle Solved**: When the puzzle is completed correctly, a congratulatory message will appear with the time taken. <br/>  <br/>
+   <img src="https://github.com/user-attachments/assets/b38c1b5d-b397-4ebe-966b-e8f173b26d32" alt="Description" width="350" height="360">
 
 ## Contributing
 
@@ -79,8 +79,3 @@ This is a simple Sudoku game built using Python and PyQt5. The application allow
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## Acknowledgments
-
-- The Sudoku puzzle generation and solving algorithm is based on the backtracking technique.
-- PyQt5 is used for the graphical user interface.
