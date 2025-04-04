@@ -16,8 +16,8 @@ class NewGameDialog(QMainWindow, Ui_NewGame):
     def __setup_events(self):
         self.pushButton_Exit.clicked.connect(self.close_game)
         self.pushButton_Easy.clicked.connect(lambda: self.start_new_game(43))
-        self.pushButton_Medium.clicked.connect(lambda: self.start_new_game(50))
-        self.pushButton_Hard.clicked.connect(lambda: self.start_new_game(57))
+        self.pushButton_Medium.clicked.connect(lambda: self.start_new_game(46))
+        self.pushButton_Hard.clicked.connect(lambda: self.start_new_game(51))
 
     def start_new_game(self, num_empty_cells: int):
         """Restart the Sudoku game."""

@@ -100,3 +100,17 @@ def has_zero(board):
         if 0 in row:
             return True  # Found a zero
     return False  # No zeros found
+
+
+def find_populated_numbers(board):
+    """Returns a list of numbers (1-9) that appear exactly 9 times in the board."""
+    count = {num: 0 for num in range(1, 10)}  # Initialize count for numbers 1-9
+
+    for row in board:
+        for cell in row:
+            if cell in count:
+                count[cell] += 1  # Count occurrences of each number
+
+    # Find numbers that appear exactly 9 times
+    populated_numbers = [num for num, freq in count.items() if freq == 9]
+    return populated_numbers

@@ -14,67 +14,87 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_NewGame(object):
     def setupUi(self, NewGame):
         NewGame.setObjectName("NewGame")
-        NewGame.resize(252, 225)
-        self.widget = QtWidgets.QWidget(NewGame)
-        self.widget.setGeometry(QtCore.QRect(70, 30, 121, 171))
-        self.widget.setObjectName("widget")
-        self.button_layout = QtWidgets.QVBoxLayout(self.widget)
-        self.button_layout.setSizeConstraint(QtWidgets.QLayout.SetNoConstraint)
-        self.button_layout.setContentsMargins(0, 0, 0, 0)
-        self.button_layout.setSpacing(10)
-        self.button_layout.setObjectName("button_layout")
-        self.pushButton_Easy = QtWidgets.QPushButton(self.widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        NewGame.resize(300, 260)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_Easy.sizePolicy().hasHeightForWidth())
-        self.pushButton_Easy.setSizePolicy(sizePolicy)
-        self.pushButton_Easy.setStyleSheet("QPushButton {\n"
-"    background-color: #3498db;  /* Blue background */\n"
-"    color: white;               /* White text */\n"
-"    border-radius: 10px;        /* Adjust this for roundness */\n"
-"}")
-        self.pushButton_Easy.setObjectName("pushButton_Easy")
-        self.button_layout.addWidget(self.pushButton_Easy)
-        self.pushButton_Medium = QtWidgets.QPushButton(self.widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_Medium.sizePolicy().hasHeightForWidth())
-        self.pushButton_Medium.setSizePolicy(sizePolicy)
-        self.pushButton_Medium.setStyleSheet("QPushButton {\n"
-"    background-color: #3498db;  /* Blue background */\n"
-"    color: white;               /* White text */\n"
-"    border-radius: 10px;        /* Adjust this for roundness */\n"
-"}")
-        self.pushButton_Medium.setObjectName("pushButton_Medium")
-        self.button_layout.addWidget(self.pushButton_Medium)
-        self.pushButton_Hard = QtWidgets.QPushButton(self.widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
-        sizePolicy.setHorizontalStretch(0)
-        sizePolicy.setVerticalStretch(0)
-        sizePolicy.setHeightForWidth(self.pushButton_Hard.sizePolicy().hasHeightForWidth())
-        self.pushButton_Hard.setSizePolicy(sizePolicy)
-        self.pushButton_Hard.setStyleSheet("QPushButton {\n"
-"    background-color: #3498db;  /* Blue background */\n"
-"    color: white;               /* White text */\n"
-"    border-radius: 10px;        /* Adjust this for roundness */\n"
-"}")
-        self.pushButton_Hard.setObjectName("pushButton_Hard")
-        self.button_layout.addWidget(self.pushButton_Hard)
-        self.pushButton_Exit = QtWidgets.QPushButton(self.widget)
-        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Preferred)
+        sizePolicy.setHeightForWidth(NewGame.sizePolicy().hasHeightForWidth())
+        NewGame.setSizePolicy(sizePolicy)
+        NewGame.setMinimumSize(QtCore.QSize(300, 260))
+        NewGame.setMaximumSize(QtCore.QSize(300, 260))
+        self.pushButton_Exit = QtWidgets.QPushButton(NewGame)
+        self.pushButton_Exit.setGeometry(QtCore.QRect(90, 200, 121, 41))
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
         sizePolicy.setHeightForWidth(self.pushButton_Exit.sizePolicy().hasHeightForWidth())
         self.pushButton_Exit.setSizePolicy(sizePolicy)
+        self.pushButton_Exit.setMaximumSize(QtCore.QSize(16777215, 16777215))
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_Exit.setFont(font)
+        self.pushButton_Exit.setLayoutDirection(QtCore.Qt.LeftToRight)
         self.pushButton_Exit.setStyleSheet("QPushButton {\n"
 "    background-color: #3498db;  /* Blue background */\n"
 "    color: white;               /* White text */\n"
 "    border-radius: 10px;        /* Adjust this for roundness */\n"
 "}")
         self.pushButton_Exit.setObjectName("pushButton_Exit")
-        self.button_layout.addWidget(self.pushButton_Exit)
+        self.widget = QtWidgets.QWidget(NewGame)
+        self.widget.setGeometry(QtCore.QRect(80, 30, 141, 151))
+        self.widget.setObjectName("widget")
+        self.verticalLayout = QtWidgets.QVBoxLayout(self.widget)
+        self.verticalLayout.setContentsMargins(0, 0, 0, 0)
+        self.verticalLayout.setSpacing(7)
+        self.verticalLayout.setObjectName("verticalLayout")
+        self.pushButton_Easy = QtWidgets.QPushButton(self.widget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_Easy.sizePolicy().hasHeightForWidth())
+        self.pushButton_Easy.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_Easy.setFont(font)
+        self.pushButton_Easy.setStyleSheet("QPushButton {\n"
+"    background-color: #3498db;  /* Blue background */\n"
+"    color: white;               /* White text */\n"
+"    border-radius: 10px;        /* Adjust this for roundness */\n"
+"}")
+        self.pushButton_Easy.setObjectName("pushButton_Easy")
+        self.verticalLayout.addWidget(self.pushButton_Easy)
+        self.pushButton_Medium = QtWidgets.QPushButton(self.widget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_Medium.sizePolicy().hasHeightForWidth())
+        self.pushButton_Medium.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_Medium.setFont(font)
+        self.pushButton_Medium.setStyleSheet("QPushButton {\n"
+"    background-color: #3498db;  /* Blue background */\n"
+"    color: white;               /* White text */\n"
+"    border-radius: 10px;        /* Adjust this for roundness */\n"
+"}")
+        self.pushButton_Medium.setObjectName("pushButton_Medium")
+        self.verticalLayout.addWidget(self.pushButton_Medium)
+        self.pushButton_Hard = QtWidgets.QPushButton(self.widget)
+        sizePolicy = QtWidgets.QSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.pushButton_Hard.sizePolicy().hasHeightForWidth())
+        self.pushButton_Hard.setSizePolicy(sizePolicy)
+        font = QtGui.QFont()
+        font.setPointSize(12)
+        self.pushButton_Hard.setFont(font)
+        self.pushButton_Hard.setStyleSheet("QPushButton {\n"
+"    background-color: #3498db;  /* Blue background */\n"
+"    color: white;               /* White text */\n"
+"    border-radius: 10px;        /* Adjust this for roundness */\n"
+"}")
+        self.pushButton_Hard.setObjectName("pushButton_Hard")
+        self.verticalLayout.addWidget(self.pushButton_Hard)
 
         self.retranslateUi(NewGame)
         QtCore.QMetaObject.connectSlotsByName(NewGame)
@@ -82,7 +102,7 @@ class Ui_NewGame(object):
     def retranslateUi(self, NewGame):
         _translate = QtCore.QCoreApplication.translate
         NewGame.setWindowTitle(_translate("NewGame", "New Game"))
+        self.pushButton_Exit.setText(_translate("NewGame", "Exit"))
         self.pushButton_Easy.setText(_translate("NewGame", "Easy"))
         self.pushButton_Medium.setText(_translate("NewGame", "Medium"))
         self.pushButton_Hard.setText(_translate("NewGame", "Hard"))
-        self.pushButton_Exit.setText(_translate("NewGame", "Exit"))
