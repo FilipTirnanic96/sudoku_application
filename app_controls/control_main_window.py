@@ -1,6 +1,7 @@
-from typing import List, Optional
+from typing import List, Optional, Callable
 
 from PyQt5.QtCore import Qt
+from PyQt5.QtGui import QIcon
 from PyQt5.QtWidgets import QMainWindow, QLineEdit, QGridLayout, QLabel, QWidget
 
 from app_controls.control_new_game_dialog import NewGameDialog
@@ -30,7 +31,7 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
     Upon solving the puzzle, the game displays a success message.
     """
 
-    def __init__(self, parent: Optional[QWidget] = None) -> None:
+    def __init__(self, parent: Optional[QWidget] = None, use_ui: bool = True) -> None:
         """
         Initializes the SudokuGame instance, sets up the user interface, initializes the game state,
         and sets up the event handlers.
@@ -46,11 +47,14 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
         Args:
             parent (Optional[QWidget], optional): The parent widget, default is None.
         """
-        super(SudokuGame, self).__init__(parent)   # Call parent constructor to initialize the widget
+        super(SudokuGame, self).__init__(parent)  # Call parent constructor to initialize the widget
         self.parent = parent
+        self.use_ui = use_ui
+        self.solved = 0
 
         # Setup the user interface (UI) using a UI setup method
         self.setupUi(self)
+        self.setWindowIcon(QIcon("app_design/pictures/sudoku_icon.png"))
 
         # Initialize a list of labels for numbers (1-9) displayed in the UI
         self.label_num_names = ['num1', 'num2', 'num3', 'num4', 'num5', 'num6', 'num7', 'num8', 'num9']
@@ -74,8 +78,10 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
         # Create and display the New Game window on startup (this allows the user to start a new game)
         self.new_game_window = NewGameDialog(self)
         # Customize window flags (disable close and minimize/maximize buttons)
-        self.new_game_window.setWindowFlags(self.windowFlags() & ~Qt.WindowCloseButtonHint & ~Qt.WindowMinMaxButtonsHint)
-        self.show_new_game_dialog()  # Show the New Game dialog window immediately
+        self.new_game_window.setWindowFlags(
+            self.windowFlags() & ~Qt.WindowCloseButtonHint & ~Qt.WindowMinMaxButtonsHint)
+        if use_ui:
+            self.show_new_game_dialog()  # Show the New Game dialog window immediately
 
         # Initialize the mistake counter (tracks how many mistakes the player has made)
         self.mistake_count = 0
@@ -147,7 +153,7 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
         self.mistakeLabel.setText(f"Mistakes: {self.mistake_count}/3 ")  # Update mistake label
 
         # Check if mistake limit is reached
-        if self.mistake_count >= 3:
+        if self.mistake_count >= 3 and self.use_ui:
             self.show_new_game_dialog()  # Show new game dialog
             show_failure_message()  # Display failure message
 
@@ -177,7 +183,7 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
         row, col = None, None  # Initialize row and column variables
         for r in range(9):
             for c in range(9):
-                if self.board[r][c] == clicked_cell:   # Identify clicked cell's position
+                if self.board[r][c] == clicked_cell:  # Identify clicked cell's position
                     row, col = r, c
                 else:
                     # If the clicked cell has a value, find all other cells with the same value
@@ -201,12 +207,12 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
 
         # Highlight cells containing the same number
         for (r, c) in value_positions:
-            update_cell_color_style(self.board[r][c], "#87CEFA") # Light blue
+            update_cell_color_style(self.board[r][c], "#87CEFA")  # Light blue
 
         # Highlight the clicked cell with a distinct color
         update_cell_color_style(self.board[row][col], "lightblue")
 
-    def set_board_value(self, value: int, row: int, col: int) -> None:
+    def set_board_value(self, value: int, row: int, col: int) -> int:
         """
         Sets the given value in the specified board cell.
 
@@ -218,8 +224,38 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
             row (int): The row index of the cell (0-8).
             col (int): The column index of the cell (0-8).
         """
+        valid = self.is_valid_value(value, row, col)  # Validate the value
+        value = 0 if valid == -1 else value
+
         self.curr_board[row][col] = value
         self.board[row][col].setText("" if value == 0 else str(value))
+
+        return valid
+
+    def set_board_value_safely(self, value: int, row: int, col: int) -> None:
+        """
+        Set the value of a QLineEdit cell safely, updating its text and read-only state.
+
+        This function temporarily disconnects the textChanged signal listener, updates the cell's
+        value and read-only state based on the given value, and then reconnects the listener to
+        ensure that it works as expected without triggering unwanted events during the update.
+
+        Args:
+            value (int): The value to set in the cell. If 0, the cell will be cleared.
+            row (int): The row index of the cell (0-8).
+            col (int): The column index of the cell (0-8).
+        """
+        try:
+            self.board[row][col].textChanged.disconnect(self.process_cell_input)  # Disconnect listener
+        except TypeError:
+            pass  # Listener not connected yet
+        valid = self.is_valid_value(value, row, col)  # Validate the value
+        value = 0 if valid == -1 else value
+
+        self.curr_board[row][col] = value
+        self.board[row][col].setText(str(value) if value != 0 else "")
+        self.board[row][col].setReadOnly(value != 0)  # Read-only generated values
+        self.board[row][col].textChanged.connect(self.process_cell_input)  # Reconnect listener
 
     def reset_board(self) -> None:
         """
@@ -228,6 +264,7 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
         - Clears both the solution board (`solved_board`) and the current board (`curr_board`).
         - Removes all displayed numbers from the UI.
         """
+        self.solved = 0  # Reset solved flag
         for row in range(9):
             for col in range(9):
                 self.solved_board[row][col] = 0  # Reset solved board
@@ -284,7 +321,7 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
         """
         for num in range(1, 10):
             label_num_name = self.label_num_names[num - 1]  # Get the QLabel name
-            label = self.findChild(QLabel, label_num_name)   # Find QLabel by name
+            label = self.findChild(QLabel, label_num_name)  # Find QLabel by name
 
             if num in populated_numbers:
                 label.setText('')  # Hide fully populated number
@@ -313,21 +350,18 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
 
             # Convert input value to integer (0 if invalid)
             value = int(new_value) if new_value.isdigit() else 0
-            valid = self.is_valid_value(value, row, col)  # Validate the value
+            valid = self.set_board_value(value, row, col)  # Validate the value
 
             if valid == -1:
                 # Invalid input (not allowed in Sudoku)
-                self.set_board_value(0, row, col)
                 update_cell_text_color(cell, "black")
             elif valid == 0:
                 # Incorrect input for Sudoku solution
-                self.set_board_value(value, row, col)
                 update_cell_text_color(cell, "red")
                 self.highlight_cells(cell)
                 self.increase_mistake_count()  # Track mistakes
             elif valid == 1:
                 # Correct input
-                self.set_board_value(value, row, col)
                 update_cell_text_color(cell, "black")
                 self.highlight_cells(cell)
 
@@ -337,15 +371,18 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
 
             # Check if the Sudoku puzzle is solved
             if (not has_zero(self.curr_board)) and check_solution(self.curr_board, self.solved_board):
-                self.show_new_game_dialog()
-                elapsed_time = self.timer.game_time.toString("mm:ss")
-                show_sudoku_solved_message(elapsed_time)  # Display success message
+                # Set solved flag to True
+                self.solved = 1
+                if self.use_ui:
+                    self.show_new_game_dialog()
+                    elapsed_time = self.timer.game_time.toString("mm:ss")
+                    show_sudoku_solved_message(elapsed_time)  # Display success message
 
             # Remove focus from the cell after entering a valid value
             if valid != -1:
                 cell.clearFocus()
 
-    def show_new_game_dialog(self)  -> None:
+    def show_new_game_dialog(self) -> None:
         """
         Displays a dialog for starting a new Sudoku game.
 
@@ -394,7 +431,10 @@ class SudokuGame(QMainWindow, Ui_MainWindow):
         # Set the values for the new puzzle on the Sudoku board
         for row in range(9):
             for col in range(9):
-                self.set_board_value(sudoku_board[row][col], row, col)
+                self.set_board_value_safely(sudoku_board[row][col], row, col)
 
+        # Update populated numbers
+        self.populated_numbers = find_populated_numbers(self.curr_board)
+        self.hide_populated_numbers(self.populated_numbers)
         # Set focus back to the main window or widget after the new game has been set up
         self.setFocus()
