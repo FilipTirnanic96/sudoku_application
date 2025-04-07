@@ -56,16 +56,16 @@ This is a simple Sudoku game built using Python and PyQt5. The application allow
 ## Application Flow
 
 1. **Start a New Game with selected difficulty**: A new randomized Sudoku puzzle is generated each time the new game is selected. <br/> <br/>
-   <img src="https://github.com/user-attachments/assets/7c07d3b7-92c7-4627-96b6-360bfe161a6e" alt="Description" width="350" height="360">
+   <img src="https://github.com/user-attachments/assets/5410c235-89a8-4597-b3b9-fcc73de33841" alt="Description" width="350" height="360">
 
 2. **Solve Puzzle**: The user solves the puzzle manually. <br/>  <br/>
-   <img src="https://github.com/user-attachments/assets/7fd6b125-4e44-483f-ad06-f35484e9c5bf" alt="Description" width="350" height="360">
+   <img src="https://github.com/user-attachments/assets/77349b64-0fff-4aa2-a26d-a4eee366dd94" alt="Description" width="350" height="360">
 
 3. **Game Over**: After three mistakes, the user loses and a message is shown. <br/>  <br/>
-   <img src="https://github.com/user-attachments/assets/4d5924f3-abb6-436f-aed6-d25d58beb17a" alt="Description" width="350" height="360">
+   <img src="https://github.com/user-attachments/assets/f6b4c7f7-72eb-4679-bb57-dbe58745b457" alt="Description" width="350" height="360">
 
 4. **Puzzle Solved**: When the puzzle is completed correctly, a congratulatory message will appear with the time taken. <br/>  <br/>
-   <img src="https://github.com/user-attachments/assets/b38c1b5d-b397-4ebe-966b-e8f173b26d32" alt="Description" width="350" height="360">
+   <img src="https://github.com/user-attachments/assets/39a634c1-7660-42c7-aaba-104de78a1491" alt="Description" width="350" height="360">
 
 ## Contributing
 
